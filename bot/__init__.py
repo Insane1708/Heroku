@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from asyncio import Lock
 from dotenv import load_dotenv, dotenv_values
 from time import time
-from subprocess import subprocess, Popen, run as srun
+from subprocess import Popen, run as srun
 from os import remove as osremove, path as ospath, environ, getcwd
 from aria2p import API as ariaAPI, Client as ariaClient
 from qbittorrentapi import Client as qbClient
@@ -432,7 +432,7 @@ if ospath.exists("list_drives.txt"):
                 INDEX_URLS.append("")
 
 PORT = environ.get('PORT')
-subprocess.Popen(["gunicorn", "web.wserver:app", f"--bind=0.0.0.0:{PORT}", "--worker-class=gevent"], env=os.environ)
+Popen(["gunicorn", "web.wserver:app", f"--bind=0.0.0.0:{PORT}", "--worker-class=gevent"], env=os.environ)
 
 
 srun(["qbittorrent-nox", "-d", f"--profile={getcwd()}"])
